@@ -1,0 +1,32 @@
+@import url(http://fonts.googleapis.com/css?family=Rancho);
+
+body {
+	color: #555;
+	font-family: 'Rancho', sans-serif;
+	font-size: 18px;
+	line-height: 1.3;
+	margin: 0 auto;
+	text-align: center;
+	width: 375px;
+}
+
+.rotating-list {  }
+.rotating-list ul { list-style:none; }
+.rotating-list ul li { 
+	display:block; 
+	height:40px;
+	background-color:#333;
+	border-left:5px solid #222;
+	border-right:5px solid #222;
+	padding-left:10px;
+  text-decoration:none;
+	color:#32edf1;
+}
+.rotating-list ul li:hover{
+	-moz-transform:rotate(-2deg);
+	-moz-box-shadow:10px 10px 20px #000000;
+  -webkit-transform:rotate(-2deg);
+	-webkit-box-shadow:10px 10px 20px #000000;
+  transform:rotate(-2deg);
+	box-shadow:10px 10px 20px #000000;
+}
