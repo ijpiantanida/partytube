@@ -10,23 +10,23 @@ body {
 	width: 375px;
 }
 
-.list8 {  }
-.list8 ul { list-style:none; }
-.list8 ul li { 
+.rotating-list {  }
+.rotating-list ul { list-style:none; }
+.rotating-list ul li { 
 	display:block; 
 	height:40px;
-	background-color:#333;
+#	background-color:#444444;
 	border-left:5px solid #222;
 	border-right:5px solid #222;
 	padding-left:10px;
   text-decoration:none;
-	color:#32edf1;
+#	color:#ffffff;
 }
-.list8 ul li:hover{
+.rotating-list ul li:hover{
 	-moz-transform:rotate(-2deg);
-	-moz-box-shadow:10px 10px 20px #000000;
+	-moz-box-shadow:10px 10px 20px #777777;
   -webkit-transform:rotate(-2deg);
-	-webkit-box-shadow:10px 10px 20px #000000;
+	-webkit-box-shadow:10px 10px 20px #777777;
   transform:rotate(-2deg);
-	box-shadow:10px 10px 20px #000000;
+	box-shadow:10px 10px 20px #777777;
 }

@@ -1,18 +1,15 @@
-var MeteorModel = {
-	update: function(){
-		this.model.update(this._id,this.mapToData());
-	},
-	mapToData: function(){
-		for (var name in this._meteor_model){
-			this._meteor_model[name] = this[name];
-		}
-		return this._meteor_model;
-	},
-	fromModel: function(data){
-		this._meteor_model = data;
-		for (var name in data){
-			this[name] = data[name];
-		}
-	}
-}
+MeteorModel =
+	fromModel: (data) ->
+		@_meteor_model = data;
+		for (var name in data)
+			@[name] = data[name];
+		
+	extended: ->
+		@include
+			update: ->
+				@model.update(@_id,@mapToData);
+			mapToData: ->
+				for (var name in @_meteor_model)
+					@_meteor_model[name] = @[name];
+				@_meteor_model;
 

@@ -1,8 +1,6 @@
-Lists = new Meteor.Collection('lists');
-Songs = new Meteor.Collection('songs');
 if (Meteor.isClient) {
 	Template.lists.lists = function(){
-		return Lists.find({},{sort: {created_at: -1}});
+		return List.all();
 	}
 
 	Template.lists.events({
@@ -56,7 +54,7 @@ if (Meteor.isClient) {
 		},
 		'click input.remove': function(){
 			var l = selected_list();
-			l.songs.splice(findSongIndex(l.songs,this),1);
+			
 			Lists.update(l._id,l,function(error){playNextSong();});
 		},
 		'mouseenter': function(){
