@@ -5,21 +5,22 @@ if (Meteor.isClient) {
 
 	Template.lists.events({
 		'click input.add': function(){
-			var new_list_input = $("#new_list_name")[0];
-			var new_list = {name: new_list_input.value, songs:[], created_at: Date.now()};
-			Lists.insert(new_list);
-			new_list_input.value="";
+			var new_list_input = $("#new_list_name");			
+			var new_list = new List(new_list_input.val());
+			new_list.save();
+			new_list_input.val("");
 		}
 	});
 
 	Template.list.events({
 		'click': function(){
 			Session.set("selected_list",this._id);
+			$("#list_"+this._id).addClass("selected");
 			var songToPlay = this.currently_playing?this.currently_playing:this.songs[0];
 			if(songToPlay==undefined){
 				return;
 			}
-			playVideo(Songs.findOne(songToPlay));
+			Song.findById(songToPlay).play(player());
 		}
 	});
 
@@ -27,35 +28,26 @@ if (Meteor.isClient) {
 		return selected_list();
 	}
 	Template.songs.songs = function(){
-		return Songs.find({_id: {$in: selected_list().songs}})
+		return Song.allIn(selected_list().songs)
 	}
 
 	Template.songs.events({
 		'click input.add': function(){
 			var youtube_id_input = $("#new_song_youtube_id")[0];
 			var youtube_id = youtube_id_input.value;
-			$.get('http://gdata.youtube.com/feeds/api/videos/'+youtube_id+'?v=2&alt=json', function(data) {
-				var l = selected_list();
-				var song_id = Songs.insert({title: data.entry.title.$t, duration: data.entry.media$group.yt$duration.seconds,youtube_id: youtube_id, list: l._id});
-				l.songs.push(song_id);
-				Lists.update(l._id,l);
-			}, 'json');
+			Song.createFromYoutube(selected_list(),youtube_id);
 			youtube_id_input.value = "";
 		}
 	});
 
-	Template.song.index = function(){
-		return indexOfSong(this);
-	}
-
 	Template.song.events({
 		'click': function(){
-			playVideo(this);
+			this.play(player());
 		},
 		'click input.remove': function(){
 			var l = selected_list();
-			
-			Lists.update(l._id,l,function(error){playNextSong();});
+			l.removeSong(this);
+			l.nextSong().play(youtubePlayer());
 		},
 		'mouseenter': function(){
 			$("#song_"+this._id).find("input.remove").show();
@@ -81,14 +73,7 @@ if (Meteor.isClient) {
 	}
 
 	function selected_list(){
-		return Lists.findOne(Session.get("selected_list"));
-	}
-
-	function playNextSong(){
-		var list = selected_list();
-		var all_songs = list.songs
-		var next_song = all_songs[(findSongIndex(all_songs, list.currently_playing)+1)%all_songs.length];
-		playVideo(next_song);
+		return List.findById(Session.get("selected_list"));
 	}
 
 	function findSongIndex(songs_array, song){
@@ -100,14 +85,11 @@ if (Meteor.isClient) {
 	}
 
 	function onVideoEnded(){
-		playNextSong();
+		selected_list().nextSong().play(player());
 	}
 
-	function playVideo(song){
-		var	l = selected_list();
-		l.currently_playing = song._id;
-		Lists.update(l._id,l);
-		youtubePlayer().loadVideoById(song.youtube_id, 0,"small");
+	function player(){
+		return new Player(youtubePlayer());
 	}
 
 	function youtubePlayer(){

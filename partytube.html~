@@ -58,7 +58,7 @@
 
 <template name="song">
 	<li>
-		<div id="song_{{index}}" class="song_info">
+		<div id="song_{{_id}}" class="song_info">
 			{{title}} - {{duration}} sec.
 			<input type="button" class="remove" value="X" style="display: none;"/>
 		</div>

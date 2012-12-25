@@ -14,19 +14,17 @@ body {
 .rotating-list ul { list-style:none; }
 .rotating-list ul li { 
 	display:block; 
-	height:40px;
+	height:30px;
 #	background-color:#444444;
-	border-left:5px solid #222;
-	border-right:5px solid #222;
+	border-left:2px solid #222;
+	border-right:2px solid #222;
 	padding-left:10px;
+	padding-top:5px;
   text-decoration:none;
 #	color:#ffffff;
 }
 .rotating-list ul li:hover{
-	-moz-transform:rotate(-2deg);
 	-moz-box-shadow:10px 10px 20px #777777;
-  -webkit-transform:rotate(-2deg);
 	-webkit-box-shadow:10px 10px 20px #777777;
-  transform:rotate(-2deg);
 	box-shadow:10px 10px 20px #777777;
 }

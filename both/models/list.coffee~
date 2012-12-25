@@ -1,8 +1,18 @@
 class List extends Module
-	@model: Lists
-	@extend MeteorModel
+	@extend(MeteorModel, {model: Lists})
+
+	constructor: (name) ->
+		@name = name
+		@songs = []
+		@created_at = Date.now()
 	indexOfSong: (song) ->
 		@songs.indexOf(song._id)
 	removeSong: (song) ->
-		@songs.splice(indexOfSong(song),1)
+		@songs.splice(@indexOfSong(song),1)
+		song.delete()
+		@update()
+	nextSong: ->
+		song_index = (@indexOfSong(@currently_playing) + 1)%@songs.length
+		Song.findById(@songs[song_index])
+		
 
