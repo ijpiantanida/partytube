@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
 	Template.lists.lists = function(){
 		return List.all();
-	}
+	};
 
 	Template.lists.events({
 		'click input.add': function(){
@@ -25,14 +25,15 @@ if (Meteor.isClient) {
 
     Template.list.selected = function(){
         return selected_list()._id == this._id ? "selected":"";
-    }
+    };
 
 	Template.songs.selected_list = function(){
 		return selected_list();
-	}
+	};
+
 	Template.songs.songs = function(){
 		return Song.allIn(selected_list().songs)
-	}
+	};
 
 	Template.songs.events({
 		'click input.add': function(){
@@ -62,7 +63,19 @@ if (Meteor.isClient) {
 
     Template.song.selected = function(){
         return selected_list().currently_playing == this._id ? "selected" : "";
-    }
+    };
+
+    Template.player_control.events({
+        'click input.next':function(){
+            selected_list().playNextSongOn(player());
+        },
+        'click input.play':function(){
+            player().play();
+        },
+        'click input.pause':function(){
+            player().pause();
+        }
+    });
 
 	var params = { allowScriptAccess: "always" };
 	var atts = { id: "myytplayer" };
@@ -71,7 +84,7 @@ if (Meteor.isClient) {
 
 	function onYouTubePlayerReady(playerId) {
       youtubePlayer().addEventListener("onStateChange","onStateChange");
-  }
+    }
 
 	function onStateChange(state){
 		if(state==0){

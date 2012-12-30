@@ -18,13 +18,13 @@
 		    {{> list}}
 		{{/each}}
 		</ul>
-		<form class="form-horizontal">
-			<div class="new_list control-group">
-				<input id="new_list_name" type="text" placeholder="List name"/>
-				<input class="add btn btn-success" type="button" value="Add List"/>
-			</div>
-		</form>
 	</div>
+    <form class="form-horizontal">
+        <div class="new_list control-group">
+            <input id="new_list_name" type="text" placeholder="List name"/>
+            <input class="add btn btn-success" type="button" value="Add List"/>
+        </div>
+    </form>
 </template>
 
 <template name="list">
@@ -66,7 +66,18 @@
 </template>
 
 <template name="player">
-		<div id="ytapiplayer">
-	  	You need Flash player 8+ and JavaScript enabled to view this video.
-		</div>
+    {{> player_control}}
+    <div id="ytapiplayer">
+        You need Flash player 8+ and JavaScript enabled to view this video.
+    </div>
+</template>
+
+<template name="player_control">
+    <form class="form-horizontal">
+        <div class="player-buttons control-group" >
+            <input type="button" class="play btn btn-warning" value=">"/>
+            <input type="button" class="pause btn btn-warning" value="||"/>
+            <input type="button" class="next btn btn-warning" value=">>"/>
+        </div>
+    </form>
 </template>

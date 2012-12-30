@@ -11,5 +11,5 @@ class Song extends Module
 		list = List.findById(@list_id)
 		list.currently_playing = @_id
 		list.save()
-		player.play(@)
+		player.playSong(@)
 		
