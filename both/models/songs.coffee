@@ -7,7 +7,7 @@ class Song extends Module
 				list.songs.push(song._id)
 				list.save()
 		, 'json');
-	play: (player) ->
+	playOn: (player) ->
 		list = List.findById(@list_id)
 		list.currently_playing = @_id
 		list.save()

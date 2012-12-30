@@ -15,14 +15,17 @@ if (Meteor.isClient) {
 	Template.list.events({
 		'click': function(){
 			Session.set("selected_list",this._id);
-			$("#list_"+this._id).addClass("selected");
 			var songToPlay = this.currently_playing?this.currently_playing:this.songs[0];
 			if(songToPlay==undefined){
 				return;
 			}
-			Song.findById(songToPlay).play(player());
+			Song.findById(songToPlay).playOn(player());
 		}
 	});
+
+    Template.list.selected = function(){
+        return selected_list()._id == this._id ? "selected":"";
+    }
 
 	Template.songs.selected_list = function(){
 		return selected_list();
@@ -42,12 +45,12 @@ if (Meteor.isClient) {
 
 	Template.song.events({
 		'click': function(){
-			this.play(player());
+			this.playOn(player());
 		},
 		'click input.remove': function(){
 			var l = selected_list();
 			l.removeSong(this);
-			l.nextSong().play(youtubePlayer());
+			l.nextSong().playOn(player());
 		},
 		'mouseenter': function(){
 			$("#song_"+this._id).find("input.remove").show();
@@ -56,6 +59,10 @@ if (Meteor.isClient) {
 			$("#song_"+this._id).find("input.remove").hide();
 		}
 	});
+
+    Template.song.selected = function(){
+        return selected_list().currently_playing == this._id ? "selected" : "";
+    }
 
 	var params = { allowScriptAccess: "always" };
 	var atts = { id: "myytplayer" };
@@ -76,16 +83,8 @@ if (Meteor.isClient) {
 		return List.findById(Session.get("selected_list"));
 	}
 
-	function findSongIndex(songs_array, song){
-		for(var i=0;i<songs_array.length;i++){
-			if(songs_array[i]==song._id)
-				return i;
-		}
-		return -1;
-	}
-
 	function onVideoEnded(){
-		selected_list().nextSong().play(player());
+		selected_list().nextSong().playOn(player());
 	}
 
 	function player(){

@@ -4,9 +4,9 @@
 
 <body>
 	<div id="outer">
-	  {{> lists}}
-		{{> songs}}
-		{{> player}}
+	    {{> lists}}
+	    {{> songs}}
+	    {{> player}}
 	</div>
 </body>
 
@@ -28,7 +28,7 @@
 </template>
 
 <template name="list">
-	<div id="list_{{_id}}" class="list">
+	<div id="list_{{_id}}" class="list {{selected}}">
 		<li>{{name}}</li>
 	</div>
 </template>
@@ -58,7 +58,7 @@
 
 <template name="song">
 	<li>
-		<div id="song_{{_id}}" class="song_info">
+		<div id="song_{{_id}}" class="song_info {{selected}}">
 			{{title}} - {{duration}} sec.
 			<input type="button" class="remove" value="X" style="display: none;"/>
 		</div>
