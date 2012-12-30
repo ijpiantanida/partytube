@@ -16,13 +16,14 @@ MeteorModel =
 	first: ->
 		@setDefaults(@fromDocument(@model.findOne()))
 	all: ->
-		all_models=[]
-		@model.find().forEach((d) => all_models.push(@setDefaults(@fromDocument(d))))
-		all_models
+		@model.find().map((d) => @setDefaults(@fromDocument(d)))
 	allIn: (ids) ->
-		all_models=[]
-		@model.find({_id: {$in: ids}}).forEach((d) => all_models.push(@setDefaults(@fromDocument(d))))
-		all_models
+		all_models = @model.find({_id: {$in: ids}}).map((d)=> @setDefaults(@fromDocument(d)))
+		sorted_models = []
+		for model in all_models
+			index = ids.indexOf(model._id)
+			sorted_models[index]=model
+		sorted_models
 	deleteById: (id) ->
 		@model.remove(id)
 	extended: (options) ->
@@ -37,7 +38,7 @@ MeteorModel =
 					@_id = new_id
 				@_meteor_attributes.saved = true
 				@_id
-			update: -> 
+			update: ->
 				@constructor.model.update(@_id,@mapToData())
 			mapToData: ->
 				@_meteor_attributes ?= {}
