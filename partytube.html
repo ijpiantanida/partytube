@@ -1,5 +1,7 @@
 <head>
-  <title>partytube</title>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <title>partytube</title>
 </head>
 
 <body>
@@ -37,7 +39,7 @@
 	<span class="title">Songs!</span>
 	{{#if selected_list}}
 	<div class="rotating-list">
-		<ul>
+		<ul id="sortable">
 		{{#each songs}}
 			{{> song}}
 		{{/each}}
@@ -57,7 +59,7 @@
 </template>
 
 <template name="song">
-	<li>
+	<li data-id="{{_id}}">
 		<div id="song_{{_id}}" class="song_info {{selected}}">
 			{{title}} - {{duration}} sec.
 			<input type="button" class="remove" value="X" style="display: none;"/>

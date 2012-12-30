@@ -35,6 +35,20 @@ if (Meteor.isClient) {
 		return Song.allIn(selected_list().songs)
 	};
 
+    Template.songs.rendered = function(){
+        $("#sortable").sortable({stop: function(event,ui){
+            var ids = [];
+            $("#sortable li").each(function(){
+                ids.push($(this).data("id"));
+            });
+            var l = selected_list();
+            l.songs = ids;
+            l.update();
+
+        }});
+        $("#sortable").disableSelection();
+    };
+
 	Template.songs.events({
 		'click input.add': function(){
 			var youtube_id_input = $("#new_song_youtube_id")[0];
