@@ -2,5 +2,5 @@ class UrlMatcher
   matchs: (source) ->
     @regex().exec(source) != null
   match: (source) ->
-    @regex().exec(source)[2]
-  regex: -> /(.*\/)?watch\?.*v=(\w+)/
+    @regex().exec(source)[1]
+  regex: -> /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/i
