@@ -61,6 +61,7 @@
 <template name="song">
 	<li data-id="{{_id}}">
 		<div id="song_{{_id}}" class="song_info {{selected}}">
+            <img src="{{thumbnail}}" />
 			{{title}} - {{duration}} sec.
 			<input type="button" class="remove" value="X" style="display: none;"/>
 		</div>

@@ -65,7 +65,7 @@ if (Meteor.isClient) {
 		'click input.remove': function(){
 			var l = selected_list();
 			l.removeSong(this);
-			l.nextSong().playOn(player());
+			l.playNextSongOn(player());
 		},
 		'mouseenter': function(){
 			$("#song_"+this._id).find("input.remove").show();
@@ -111,7 +111,7 @@ if (Meteor.isClient) {
 	}
 
 	function onVideoEnded(){
-		selected_list().nextSong().playOn(player());
+		selected_list().playNextSongOn(player());
 	}
 
 	function player(){

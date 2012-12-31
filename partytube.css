@@ -17,8 +17,7 @@ body {
 .rotating-list {  }
 .rotating-list ul { list-style:none; }
 .rotating-list ul li { 
-	display:block; 
-	height:30px;
+	display:block;
 	border-left:2px solid #222;
 	border-right:2px solid #222;
 	padding-left:10px;
