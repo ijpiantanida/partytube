@@ -52,7 +52,7 @@ if (Meteor.isClient) {
 	Template.songs.events({
 		'click input.add': function(){
 			var youtube_id_input = $("#new_song_youtube_id")[0];
-			var youtube_id = youtube_id_input.value;
+            var youtube_id = new YoutubeMatcher().match(youtube_id_input.value);
 			Song.createFromYoutube(selected_list(),youtube_id);
 			youtube_id_input.value = "";
 		}
