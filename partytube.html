@@ -45,12 +45,19 @@
 		{{/each}}
 		</ul>
 	</div>
-	<form class="form-horizontal">
-		<div class="add-song control-group" >
-			<input id="new_song_youtube_id" type="text" placeholder="Youtube's URL or Video ID"/>
-			<input class="add btn btn-success" type="button" value="Add Song"/>
-		</div>
-	</form>
+    <div class="add-song control-group" >
+	    <form class="form-horizontal">
+            <input id="new_song_youtube_id" type="text" placeholder="Youtube's URL or Video ID"/>
+            <input id="add-song-button" class="btn btn-success" type="button" value="Add Song"/>
+    	</form>
+    </div>
+    <div class="search-song control-group" >
+        <form class="form-horizontal">
+            <input id="search-keywords" type="text" placeholder="Search keywords"/>
+            <input class="add btn btn-success" type="button" value="Search"/>
+        </form>
+        <div id="results"></div>
+    </div>
 	{{/if}}
 
 	{{#unless selected_list}}
@@ -83,4 +90,19 @@
             <input type="button" class="next btn btn-warning" value=">>"/>
         </div>
     </form>
+</template>
+<template name="search_results">
+    <ul class="search-results">
+    {{#each videos}}
+        {{> single_search_result}}
+    {{/each}}
+    </ul>
+</template>
+<template name="single_search_result">
+    <li>
+        <div class="search-result" data-id="{{id}}">
+            <img src="{{thumbnail}}"/>
+            {{title}}
+        </div>
+    </li>
 </template>
