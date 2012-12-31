@@ -10,6 +10,10 @@ body {
 	width: 800px;
 }
 
+.add-song #new_song_youtube_id {
+    width: 500px;
+}
+
 .rotating-list {  }
 .rotating-list ul { list-style:none; }
 .rotating-list ul li { 
