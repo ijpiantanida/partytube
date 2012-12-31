@@ -31,12 +31,11 @@ Template.songs.events({
         var keywords = $("#search-keywords")[0].value;
         if(keywords != ""){
             if(current_search){current_search.abort();}
-            current_search = YoutubeService.search(keywords,function(results){
-                var html= Template.search_results({videos: results});
-                $("#results").html(html);
+            current_search = YoutubeService.search(keywords,function(result){
+                Session.set("search-results", result);
             });
         }else{
-            $("#results").html("");
+            Session.set("search-results", []);
         }
     }
 });

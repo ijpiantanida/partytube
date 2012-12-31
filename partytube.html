@@ -45,18 +45,18 @@
 		{{/each}}
 		</ul>
 	</div>
-    <div class="add-song control-group" >
+    <div class="add-song" >
 	    <form class="form-horizontal">
             <input id="new_song_youtube_id" type="text" placeholder="Youtube's URL or Video ID"/>
             <input id="add-song-button" class="btn btn-success" type="button" value="Add Song"/>
     	</form>
     </div>
-    <div class="search-song control-group" >
+    <div class="search-song" >
         <form class="form-horizontal">
             <input id="search-keywords" type="text" placeholder="Search keywords"/>
             <input class="add btn btn-success" type="button" value="Search"/>
         </form>
-        <div id="results"></div>
+        <div id="results">{{> search_results}}</div>
     </div>
 	{{/if}}
 
@@ -72,7 +72,7 @@
 			{{title}} - {{duration}} sec.
 			<input type="button" class="remove" value="X" style="display: none;"/>
 		</div>
-	</li>		
+	</li>
 </template>
 
 <template name="player">
@@ -99,8 +99,8 @@
     </ul>
 </template>
 <template name="single_search_result">
-    <li>
-        <div class="search-result" data-id="{{id}}">
+    <li data-id="{{id}}">
+        <div class="search-result">
             <img src="{{thumbnail}}"/>
             {{title}}
         </div>
