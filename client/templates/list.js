@@ -10,5 +10,6 @@ Template.list.events({
 });
 
 Template.list.selected = function(){
-    return selected_list()._id == this._id ? "selected":"";
+    var l = selected_list();
+    return (l && l._id == this._id) ? "selected":"";
 };

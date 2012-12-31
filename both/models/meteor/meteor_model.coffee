@@ -12,7 +12,7 @@ MeteorModel =
 		instance._meteor_attributes.saved = true
 		instance
 	findById: (id) ->
-		@setDefaults(@fromDocument(@model.findOne(id)))
+		@setDefaults(@fromDocument(@model.findOne(id))) if id
 	first: ->
 		@setDefaults(@fromDocument(@model.findOne()))
 	all: ->
