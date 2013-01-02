@@ -2,10 +2,8 @@ Template.list.events({
     'click': function(){
         Session.set("selected_list",this._id);
         var songToPlay = this.currently_playing?this.currently_playing:this.songs[0];
-        if(songToPlay==undefined){
-            return;
-        }
-        Song.findById(songToPlay).playOn(player());
+        if(songToPlay) Song.findById(songToPlay).playOn(player());
+        Events.notify("list-selected", this);
     }
 });
 

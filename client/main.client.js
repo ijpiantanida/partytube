@@ -1,3 +1,10 @@
+var my_user_id = undefined;
+Meteor.call("register_client", function(error, result){
+    if(result){
+        my_user_id = result;
+    }
+});
+
 var params = { allowScriptAccess: "always" };
 var atts = { id: "myytplayer" };
 swfobject.embedSWF("http://www.youtube.com/v/qPOTEs_yTJo?enablejsapi=1&playerapiid=ytplayer&version=3",
@@ -6,6 +13,19 @@ swfobject.embedSWF("http://www.youtube.com/v/qPOTEs_yTJo?enablejsapi=1&playerapi
 function onYouTubePlayerReady(playerId) {
     youtubePlayer().addEventListener("onStateChange","onStateChange");
 }
+
+var player_statuses_query = undefined;
+Events.on("list-selected", function(list){
+    if(player_statuses_query) player_statuses_query.observe({});
+    console.log("New selected list: " + list._id);
+    player_statuses_query = PlayerStatuses.find({list_id: list._id, created_at: {$gt: Date.now()}});
+    player_statuses_query.observe({
+        added: function(player_status, index){
+            event_listener = new PlayerStatusEventListener(my_user_id, player());
+            event_listener.call(player_status);
+        }
+    });
+});
 
 function onStateChange(state){
     if(state==0){
