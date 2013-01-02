@@ -14,12 +14,11 @@ function onYouTubePlayerReady(playerId) {
     youtubePlayer().addEventListener("onStateChange","onStateChange");
 }
 
-var player_statuses_query = undefined;
+var player_statuses_query_handler = undefined;
 Events.on("list-selected", function(list){
-    if(player_statuses_query) player_statuses_query.observe({});
-    console.log("New selected list: " + list._id);
-    player_statuses_query = PlayerStatuses.find({list_id: list._id, created_at: {$gt: Date.now()}});
-    player_statuses_query.observe({
+    if(player_statuses_query_handler) player_statuses_query_handler.stop();
+    query = PlayerStatuses.find({list_id: list._id, created_at: {$gt: Date.now()}});
+    player_statuses_query_handler = query.observe({
         added: function(player_status, index){
             event_listener = new PlayerStatusEventListener(my_user_id, player());
             event_listener.call(player_status);
