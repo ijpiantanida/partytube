@@ -5,5 +5,4 @@ swfobject.embedSWF("http://www.youtube.com/v/qPOTEs_yTJo?enablejsapi=1&controls=
 
 window.onYouTubePlayerReady = (playerId) -> DomHelpers.youtubePlayer().addEventListener("onStateChange","onStateChange")
 window.onStateChange = (state) ->
-  console.log("State changed to #{state}")
-  Events.notify("song-finished") if state == 0
+  Events.notify("current-song-ended") if state == 0
