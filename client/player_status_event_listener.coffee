@@ -1,6 +1,6 @@
 class PlayerStatusEventListener
   constructor: (@user_id, @player) ->
-  call: (new_player_status) ->
+  notify: (new_player_status) ->
     return if new_player_status.user_id == @user_id
     callback = _.detect(@all_callbacks(), (callback) => callback.can_manage(new_player_status))
     callback.apply(new_player_status)

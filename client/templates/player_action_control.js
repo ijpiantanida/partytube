@@ -1,11 +1,11 @@
 Template.player_control.events({
     'click input.next':function(){
-        selected_list().playNextSongOn(playerControl());
+        TemplatesHelpers.selected_list().playNextSongOn(Partytube.player_control);
     },
     'click input.play':function(){
-        playerControl().play();
+        Partytube.player_control.play();
     },
     'click input.pause':function(){
-        playerControl().pause();
+        Partytube.player_control.pause();
     }
 });

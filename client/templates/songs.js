@@ -1,9 +1,9 @@
 Template.songs.selected_list = function(){
-    return selected_list();
+    return TemplatesHelpers.selected_list();
 };
 
 Template.songs.songs = function(){
-    return Song.allIn(selected_list().songs)
+    return Song.allIn(TemplatesHelpers.selected_list().songs)
 };
 
 Template.songs.rendered = function(){
@@ -12,7 +12,7 @@ Template.songs.rendered = function(){
         $("#sortable li").each(function(){
             ids.push($(this).data("id"));
         });
-        var l = selected_list();
+        var l = TemplatesHelpers.selected_list();
         l.songs = ids;
         l.update();
 
@@ -24,7 +24,7 @@ Template.songs.events({
     'click input#add-song-button': function(){
         var youtube_id_input = $("#new_song_youtube_id")[0];
         var youtube_id = new YoutubeMatcher().match(youtube_id_input.value);
-        Song.createFromYoutube(selected_list(),youtube_id);
+        Song.createFromYoutube(TemplatesHelpers.selected_list(),youtube_id);
         youtube_id_input.value = "";
     },
     'keyup input#search-keywords': function(){
