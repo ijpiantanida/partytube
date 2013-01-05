@@ -44,6 +44,10 @@ function player(){
     return new Player(youtubePlayer());
 }
 
+function playerControl(){
+    return new PlayerActionControl(player())
+}
+
 function youtubePlayer(){
     return document.getElementById("myytplayer")
 }

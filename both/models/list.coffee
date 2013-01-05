@@ -15,5 +15,7 @@ class List extends Module
 		song_index = (@indexOfSong(Song.findById(@currently_playing)) + 1)%@songs.length
 		Song.findById(@songs[song_index])
 	playNextSongOn: (player) ->
-    @nextSong().playOn(player);
+    next_song = @nextSong()
+    next_song.playOn(player);
+    next_song
 
