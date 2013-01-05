@@ -1,9 +1,13 @@
 Template.list.events({
     'click': function(){
-        Session.set("selected_list",this._id);
-        var songToPlay = this.currently_playing?this.currently_playing:this.songs[0];
-        if(songToPlay) Song.findById(songToPlay).playOn(player());
-        Events.notify("list-selected", this);
+        var new_list = this;
+        $("#songs-column").hide("blind", { direction: "horizontal" },500,function(){Session.set("selected_list",this._id);
+            Session.set("selected_list",new_list._id);
+            var songToPlay = new_list.currently_playing?new_list.currently_playing:new_list.songs[0];
+            if(songToPlay) Song.findById(songToPlay).playOn(player());
+            Events.notify("list-selected", new_list);
+            $("#songs-column").show("blind", { direction: "horizontal" },500);
+        });
     }
 });
 

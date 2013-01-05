@@ -6,9 +6,15 @@
 
 <body>
 	<div id="outer">
-	    {{> lists}}
-	    {{> songs}}
-	    {{> player}}
+        <div class="row">
+            <div class="span5">
+                {{> lists}}
+            </div>
+            <div id="songs-column" class="span7">
+                {{> songs}}
+            </div>
+        </div>
+        {{> player}}
 	</div>
 </body>
 
