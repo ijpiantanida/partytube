@@ -5,7 +5,7 @@ Template.song.events({
     'click input.remove': function(){
         var l = TemplatesHelpers.selected_list();
         l.removeSong(this);
-        l.playNextSongOn(Partytube.player_control);
+        l.with_next_song_do(function(song){Partytube.player_control.playSong(song)});
     },
     'mouseenter': function(){
         $("#song_"+this._id).find("input.remove").show();
