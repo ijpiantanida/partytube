@@ -1,4 +1,4 @@
-MeteorModelKeywords = ['_meteor_attributes']
+MeteorModelKeywords = ['_meteor_attributes', '_id']
 
 MeteorModel =
 	fromDocument: (document) ->
@@ -39,7 +39,7 @@ MeteorModel =
 				@_meteor_attributes.saved = true
 				@_id
 			update: ->
-				@constructor.model.update(@_id,@mapToData())
+				@constructor.model.update(@_id,$set: @mapToData())
 			mapToData: ->
 				@_meteor_attributes ?= {}
 				@_meteor_attributes.document_model = {}
