@@ -1,5 +1,11 @@
 class Partytube
 
+Events.on("finished-loading", ->
+  Partytube.player = new YoutubePlayer(DomHelpers.youtubePlayer())
+  Partytube.player_control = new PlayerActionControl(Partytube.player)
+  session_saved_selected_list = Session.get("selected_list")
+  Events.notify("list-selected",List.findById(session_saved_selected_list)) if session_saved_selected_list
+)
 Events.on("user-id-changed", (user_id) -> Partytube.user_id = user_id)
 Events.on("list-selected", (list) -> Partytube.selected_list = list)
 Events.on("list-selected", (list) -> Session.set("selected_list",list._id))
@@ -18,8 +24,9 @@ Events.on("list-selected", (list) ->
       event_listener.notify(player_status)
   )
 )
-Events.on("current-song-ended", ->
-  Partytube.selected_list.with_next_song_do((next_song) ->
+Events.on("current-song-ended", (song_id) ->
+  song = Song.findById song_id
+  Partytube.selected_list.with_next_song_of_do(song,(next_song) ->
     Partytube.player_control.playSong(next_song)
   )
 )
