@@ -17,20 +17,21 @@ Events.on("list-selected", (list) ->
   query = PlayerStatuses.find(list_id: list._id);
   player_statuses_query_handler = query.observe(
     added: (player_status, index) ->
+      console.log "Added for list #{list._id}"
       event_listener = new PlayerStatusEventListener(Partytube.my_user_id, Partytube.player)
       event_listener.notify(player_status)
   )
 )
-Events.on("list-selected", (list) -> Meteor.subscribe("songs-of-list", list._id))
-songs_subscriptions_handler = undefined
-Events.on("list-selected", (list) ->
-  console.log "Tengo que romper el handler" if songs_subscriptions_handler
-  songs_subscriptions_handler.stop() if songs_subscriptions_handler
-  songs_subscriptions_handler = Meteor.subscribe("player-status", list._id, ->
-    songToPlay = list.currently_playing or _.first(list.songs)
-    Partytube.player.playSong(Song.findById(songToPlay)) if songToPlay
-  )
+
+Meteor.autosubscribe( ->
+  if Session.get("selected_list")
+    Meteor.subscribe("songs-of-list", Session.get("selected_list"), ->
+      list = List.findById(Session.get("selected_list"))
+      songToPlay = list.currently_playing or _.first(list.songs)
+      Partytube.player.playSong(Song.findById(songToPlay)) if songToPlay
+    )
 )
+
 Events.on("current-song-ended", (song_id) ->
   song = Song.findById song_id
   Partytube.selected_list.with_next_song_of_do(song,(next_song) ->
