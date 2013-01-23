@@ -1,6 +1,7 @@
 Template.song.events({
     'click': function(){
-        this.playOn(Partytube.player_control);
+        this.update_list();
+        Partytube.player_control.playSong(this);
     },
     'click input.remove': function(){
         var l = TemplatesHelpers.selected_list();

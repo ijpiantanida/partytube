@@ -28,12 +28,13 @@ Events.on("list-selected", (list) ->
   songs_subscriptions_handler.stop() if songs_subscriptions_handler
   songs_subscriptions_handler = Meteor.subscribe("player-status", list._id, ->
     songToPlay = list.currently_playing or _.first(list.songs)
-    Song.findById(songToPlay).playOn(Partytube.player) if songToPlay
+    Partytube.player.playSong(Song.findById(songToPlay)) if songToPlay
   )
 )
 Events.on("current-song-ended", (song_id) ->
   song = Song.findById song_id
   Partytube.selected_list.with_next_song_of_do(song,(next_song) ->
+    next_song.update_list()
     Partytube.player_control.playSong(next_song)
   )
 )

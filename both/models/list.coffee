@@ -19,7 +19,8 @@ class List extends Module
     Song.findById(song_id)
   playNextSongOn: (player) ->
     next_song = @next_song()
-    next_song.playOn(player);
+    next_song.update_list();
+    player.playSong(next_song);
     next_song
   with_next_song_do: (callback) ->
     callback(@next_song())
